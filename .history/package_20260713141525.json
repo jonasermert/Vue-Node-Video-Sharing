@@ -1,0 +1,42 @@
+{
+  "name": "vue-node-video-sharing",
+  "version": "1.0.0",
+  "description": "A full-stack video sharing application built with Vue 3, Node.js, Express, MySQL and Tailwind CSS.",
+  "private": true,
+  "license": "MIT",
+  "author": "Jonas Ermert",
+  "engines": {
+    "node": ">=20",
+    "npm": ">=10"
+  },
+  "scripts": {
+    "install:all": "npm --prefix client install && npm --prefix server install",
+
+    "dev": "concurrently \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
+
+    "build": "npm --prefix client run build",
+
+    "start": "npm --prefix server run start",
+
+    "test": "npm --prefix server run test",
+
+    "format": "prettier --write .",
+
+    "format:check": "prettier --check .",
+
+    "db:start": "docker compose up -d mysql",
+
+    "db:stop": "docker compose stop mysql",
+    "db:restart": "docker compose restart mysql",
+    "db:logs": "docker compose logs -f mysql",
+    "db:reset": "docker compose down -v",
+    "docker:up": "docker compose up --build",
+    "docker:down": "docker compose down",
+    "docker:restart": "docker compose down && docker compose up --build",
+    "docker:logs": "docker compose logs -f"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "prettier": "^3.6.2"
+  }
+}

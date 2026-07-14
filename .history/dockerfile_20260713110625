@@ -1,0 +1,32 @@
+# syntax=docker/dockerfile:1
+
+FROM node:24-alpine
+
+WORKDIR /app
+
+# Install the root dependencies first for better Docker layer caching.
+COPY package.json package-lock.json ./
+RUN npm ci --ignore-scripts
+
+# Install client dependencies.
+COPY client/package.json client/package-lock.json ./client/
+RUN npm ci --prefix client
+
+# Install server dependencies.
+COPY server/package.json server/package-lock.json ./server/
+RUN npm ci --prefix server
+
+# Copy the application source code.
+COPY . .
+
+# Create the upload directory and run the application as the non-root Node user.
+RUN mkdir -p /app/server/uploads     && chown -R node:node /app
+
+USER node
+
+EXPOSE 3000
+EXPOSE 5173
+
+ENV NODE_ENV=development
+
+CMD ["npx", "concurrently", "--kill-others-on-fail", "npm --prefix server run dev", "npm --prefix client run dev -- --host 0.0.0.0"]
