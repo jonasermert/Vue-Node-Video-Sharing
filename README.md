@@ -1,5 +1,8 @@
 # 🎥 ClipShare
 
+![Studio theme preview](screenshots/studio-screenshot.jpg)
+
+
 A modern full-stack video and screen recording application built with **Vue 3**, **Node.js**, **Express**, **MySQL**, **Docker** and **Tailwind CSS 4**.
 
 Users can record their screen or webcam directly in the browser, upload recordings, manage their private video library and share videos through public links.
