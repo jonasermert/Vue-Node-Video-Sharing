@@ -1,0 +1,42 @@
+/* Theme overrides from Studio: fonts + brand colors only.
+   Keep all project layout & component rules from original tailwind.css unchanged.
+*/
+
+@font-face {
+  font-family: 'Mona Sans';
+  font-weight: 200 900;
+  font-display: swap;
+  font-style: normal;
+  src: url('../fonts/Mona-Sans.var.woff2') format('woff2');
+}
+
+:root {
+  --font-sans: 'Mona Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  --font-display: 'Mona Sans', var(--font-sans);
+
+  /* Studio brand palette (kept minimal) */
+  --color-brand-50: #fff7ed;
+  --color-brand-100: #ffedd5;
+  --color-brand-200: #fed7aa;
+  --color-brand-300: #fdba74;
+  --color-brand-400: #fb923c;
+  --color-brand-500: #f97316;
+  --color-brand-600: #ea580c;
+  --color-brand-700: #c2410c;
+  --color-brand-800: #9a3412;
+  --color-brand-900: #7c2d12;
+}
+
+/* Apply fonts without touching layout rules */
+html, body {
+  font-family: var(--font-sans) !important;
+}
+
+/* Small helpers to map existing utility tokens to brand colors */
+.text-brand-500 { color: var(--color-brand-500) !important; }
+.bg-brand-500 { background-color: var(--color-brand-500) !important; }
+.border-brand-500 { border-color: var(--color-brand-500) !important; }
+
+/* Ensure focus/links respect brand color */
+a, .text-link { color: var(--color-brand-600); }
+:focus-visible { outline-color: color-mix(in srgb, var(--color-brand-500) 60%, transparent); }
