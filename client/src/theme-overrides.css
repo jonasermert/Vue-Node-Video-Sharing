@@ -1,5 +1,5 @@
-/* Theme overrides from Studio: fonts + brand colors only.
-   Keep all project layout & component rules from original tailwind.css unchanged.
+/* Monochrome Studio-like overrides: black & white + Mona Sans
+   Keep original layout and utilities from project's tailwind.css intact.
 */
 
 @font-face {
@@ -14,29 +14,99 @@
   --font-sans: 'Mona Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
   --font-display: 'Mona Sans', var(--font-sans);
 
-  /* Studio brand palette (kept minimal) */
-  --color-brand-50: #fff7ed;
-  --color-brand-100: #ffedd5;
-  --color-brand-200: #fed7aa;
-  --color-brand-300: #fdba74;
-  --color-brand-400: #fb923c;
-  --color-brand-500: #f97316;
-  --color-brand-600: #ea580c;
-  --color-brand-700: #c2410c;
-  --color-brand-800: #9a3412;
-  --color-brand-900: #7c2d12;
+  /* Monochrome palette */
+  --color-bg: #ffffff;
+  --color-surface: #ffffff;
+  --color-muted: #f5f5f5;
+  --color-border: #e6e6e6;
+  --color-text: #0b0b0b;
+  --color-subtext: #444444;
+  --color-contrast: #000000;
 }
 
-/* Apply fonts without touching layout rules */
+/* Use the Studio display font everywhere */
 html, body {
   font-family: var(--font-sans) !important;
+  background: var(--color-bg) !important;
+  color: var(--color-text) !important;
 }
 
-/* Small helpers to map existing utility tokens to brand colors */
-.text-brand-500 { color: var(--color-brand-500) !important; }
-.bg-brand-500 { background-color: var(--color-brand-500) !important; }
-.border-brand-500 { border-color: var(--color-brand-500) !important; }
+/* Links and interactive elements */
+a, .text-link {
+  color: var(--color-contrast) !important;
+  text-decoration: none;
+}
 
-/* Ensure focus/links respect brand color */
-a, .text-link { color: var(--color-brand-600); }
-:focus-visible { outline-color: color-mix(in srgb, var(--color-brand-500) 60%, transparent); }
+a:hover, .text-link:hover { opacity: 0.85; }
+
+:focus-visible {
+  outline: 2px solid var(--color-contrast);
+  outline-offset: 3px;
+}
+
+@layer components {
+  /* Buttons: Studio-like, but monochrome (explicit CSS instead of @apply to avoid @apply resolution issues) */
+  .primary-btn, .button, .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.75rem; /* rounded-xl */
+    padding: 0.625rem 1rem; /* py-2.5 px-4 */
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 600; /* font-semibold */
+
+    background: var(--color-contrast) !important;
+    color: var(--color-bg) !important;
+    border: 1px solid var(--color-contrast);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+  }
+
+  .primary-btn:hover, .button:hover, .btn-primary:hover {
+    filter: brightness(0.95);
+  }
+
+  .secondary-btn, .button.secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.75rem;
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+
+    background: var(--color-bg) !important;
+    color: var(--color-text) !important;
+    border: 1px solid var(--color-border) !important;
+  }
+
+  /* Cards */
+  .card, .video-card {
+    background: var(--color-surface) !important;
+    border: 1px solid var(--color-border) !important;
+    color: var(--color-text) !important;
+    box-shadow: 0 8px 30px rgba(11,11,11,0.03);
+  }
+}
+
+/* Hero/preview adjustments (Studio-like layout preserved elsewhere) */
+.hero h1, .title-row h1 {
+  font-family: var(--font-display) !important;
+  color: var(--color-contrast) !important;
+  line-height: 0.95;
+}
+
+.hero p, .public p, .video-card p {
+  color: var(--color-subtext) !important;
+}
+
+/* Utility helpers for classes used across project */
+.text-brand-500, .text-contrast { color: var(--color-contrast) !important; }
+.bg-brand-500, .bg-contrast { background-color: var(--color-contrast) !important; }
+.border-brand-500, .border-contrast { border-color: var(--color-contrast) !important; }
+
+/* Responsive tweak: ensure spacing preserved */
+@media (max-width: 800px) {
+  .hero { gap: 32px; }
+}
